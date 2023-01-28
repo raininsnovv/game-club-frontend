@@ -1,0 +1,17 @@
+
+a{
+            text-decoration: none;
+            color: rgb(169, 156, 156);
+            margin-right: 12px;
+            margin-left: 12px;
+    }
+
+a:hover{
+        border-bottom: white solid 4px;
+        padding-bottom: 4px;
+}
+
+a:focus{
+    border-bottom: white solid 4px;
+    padding-bottom: 4px;
+}
