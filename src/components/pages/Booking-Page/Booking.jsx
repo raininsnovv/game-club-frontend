@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { addBooking } from '../../../features/slice/bookingSlice'
 
 import styles from './Booking.module.scss'
+import Calendar from './Calendar'
 
 const Booking = () => {
   const dispatch = useDispatch()
@@ -57,14 +58,22 @@ const Booking = () => {
   }
 
   const handleSubmitBooking = () => {
-     dispatch(
+    dispatch(
       addBooking({
         seat: '63d4891d91bffe27c5f6fcb8',
         player: 'Rash',
         date: '2023-01-30',
         hours: str,
       })
-    ) 
+    )
+  }
+
+  const handleCalendar = () => {
+    return (
+      <div>
+        <Calendar />
+      </div>
+    )
   }
 
   return (
@@ -96,6 +105,7 @@ const Booking = () => {
               )
             })
           : null}
+        <div>{openDate ? handleCalendar() : null}</div>
       </div>
       <button onClick={handleSubmitBooking}>забронировать</button>
     </div>
