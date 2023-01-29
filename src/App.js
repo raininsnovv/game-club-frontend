@@ -8,6 +8,7 @@ import styled from 'styled-components'
 import Home from './components/pages/Home/Home'
 import PC from './components/pages/PC/PC'
 import PS5 from './components/pages/PS5/PS5'
+import Booking from './components/pages/Booking-Page/Booking'
 
 export const AppWrapper = styled.div`
   display: flex;
@@ -30,6 +31,7 @@ const App = () => {
         <Route path="*" element={<Notfoundpage />} />
         <Route path="/pc" element={<PC />} />
         <Route path="/ps5" element={<PS5 />} />
+        <Route path="/booking" element={<Booking />} />
       </Routes>
       <Footer />
     </AppWrapper>

@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { addBooking } from '../../../features/Slice/bookingSlice'
+import { addBooking } from '../../../features/slice/bookingSlice'
+
 import styles from './Booking.module.scss'
 
 const Booking = () => {
@@ -56,14 +57,14 @@ const Booking = () => {
   }
 
   const handleSubmitBooking = () => {
-    /*  dispatch(
+     dispatch(
       addBooking({
         seat: '63d4891d91bffe27c5f6fcb8',
         player: 'Rash',
         date: '2023-01-30',
         hours: str,
       })
-    ) */
+    ) 
   }
 
   return (
