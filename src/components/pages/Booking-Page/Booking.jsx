@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { addDateInContainer } from '../../../features/reducers/bookingReducer'
 import { addBooking } from '../../../features/slice/bookingSlice'
 
 import styles from './Booking.module.scss'
@@ -48,13 +49,23 @@ const Booking = () => {
   const [openDate, setOpenDate] = useState(false)
   const [bookingOrNot, setBookingOrNot] = useState(false)
   const bookingAll = useSelector((state) => state.bookingSlice.booking)
-  const res = bookingAll.time
+  const containerDate = useSelector(
+    (state) => state.bookingReducer.containerDate
+  )
+
   let str = ''
   const handleOpenDate = () => {
     setOpenDate(true)
   }
   const handleChoseDate = (hours) => {
     str += hours
+    dispatch(
+      addDateInContainer({
+        hours: hours,
+        seat: '63d4891d91bffe27c5f6fcb8',
+        player: 'Rash',
+      })
+    )
   }
 
   const handleSubmitBooking = () => {

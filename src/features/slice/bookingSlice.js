@@ -4,6 +4,7 @@ const initialState = {
   error: null,
   loading: false,
   booking: [],
+  
 }
 
 export const fetchBooking = createAsyncThunk(
