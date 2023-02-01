@@ -4,7 +4,6 @@ const initialState = {
   error: null,
   loading: false,
   booking: [],
-  
 }
 
 export const fetchBooking = createAsyncThunk(
@@ -27,7 +26,8 @@ export const fetchBooking = createAsyncThunk(
 
 export const addBooking = createAsyncThunk(
   'booking/add',
-  async ({ seat, date, player, hours }, thunkAPI) => {
+  async ({ seat, player, date, hours }, thunkAPI) => {
+    console.log(seat, player, date, hours, 'action')
     try {
       const res = await fetch(`http://localhost:4000/booking/${seat}`, {
         method: 'POST',
@@ -63,6 +63,7 @@ const bookingSlice = createSlice({
         state.loading = false
         state.error = null
         state.booking = action.payload
+        console.log(action.payload, 'addcase')
       })
       .addCase(fetchBooking.rejected, (state, action) => {
         state.loading = false

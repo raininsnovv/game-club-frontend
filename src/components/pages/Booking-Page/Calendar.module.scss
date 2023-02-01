@@ -1,11 +1,11 @@
-.main {
+.mainCalendar {
   border: 2px solid green;
   width: 900px;
 
   flex-wrap: wrap;
-  height: 500px;
+  height: 250px;
 
-  .daysContainer {
+  .daysContainerCalendar {
     border: 2px solid black;
     width: 800px;
     margin-left: 30px;
@@ -17,6 +17,7 @@
     .days {
       border: 2px solid green;
       width: 100px;
+      margin: 5px 5px;
     }
   }
 }

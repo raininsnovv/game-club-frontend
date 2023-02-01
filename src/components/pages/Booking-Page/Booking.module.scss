@@ -5,20 +5,11 @@
   margin-top: 100px;
   background-color: orange;
 
-  .daysWeekAndTime {
-    display: flex;
-    align-items: center;
-    padding-left: 150px;
-    margin-bottom: 30px;
-
-    .daysInWeek {
-      margin-left: 15px;
-    }
-  }
-
   .containerTime {
     display: flex;
     flex-wrap: wrap;
+
+    
 
     .timeInDay2 {
       border: 2px solid red;

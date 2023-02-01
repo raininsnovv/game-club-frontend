@@ -1,122 +1,123 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { addDateInContainer } from '../../../features/reducers/bookingReducer'
-import { addBooking } from '../../../features/slice/bookingSlice'
 
-import styles from './Booking.module.scss'
-import Calendar from './Calendar'
+import { addBooking } from '../../../features/slice/bookingSlice'
+import moment from 'moment'
+import styles from './Calendar.module.scss'
+import styles2 from './Booking.module.scss'
 
 const Booking = () => {
   const dispatch = useDispatch()
 
+  const [date2, setDate] = useState(new Date())
+  const currentDate = moment(date2).format('MMMM YYYY')
+  const daysInMonth = moment(date2).daysInMonth()
+  const firstDayOfMonth = moment(date2).startOf('month').format('dddd')
+  const days = []
+
+  for (let i = 1; i <= daysInMonth; i++) {
+    days.push(
+      <div>
+        <div key={i}>{moment(date2).date(i).format('YYYY-MM-DD')} </div>
+      </div>
+    )
+  }
+
   const dateForBooking = {
     daysOfTheWeek: ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'],
     time: [
-      '09:00',
-      '09:30',
-      '10:00',
-      '10:30',
-      '11:00',
-      '11:30',
-      '12:00',
-      '12:30',
-      '13:00',
-      '13:30',
-      '14:00',
-      '14:30',
-      '15:00',
-      '15:30',
-      '16:00',
-      '16:30',
-      '17:00',
-      '17:30',
-      '18:00',
-      '18:30',
-      '19:00',
-      '19:30',
-      '20:00',
-      '20:30',
-      '21:00',
-      '21:30',
-      '22:00',
-      '22:30',
-      '23:00',
-      '23:30',
-      '24:00',
+      '09:00 - 10:00',
+      '10:00 - 11:00',
+      '11:00 - 12:00',
+      '12:00 - 13:00',
+      '13:00 - 14:00',
+      '14:00 - 15:00',
+      '15:00 - 16:00',
+      '16:00 - 17:00',
+      '17:00 - 18:00',
+      '18:00 - 19:00',
+      '19:00 - 20:00',
+      '20:00 - 21:00',
+      '21:00 - 22:00',
+      '22:00 - 23:00',
+      '23:00 - 24:00',
     ],
   }
   const { daysOfTheWeek, time } = dateForBooking
-  const [openDate, setOpenDate] = useState(false)
-  const [bookingOrNot, setBookingOrNot] = useState(false)
-  const bookingAll = useSelector((state) => state.bookingSlice.booking)
-  const containerDate = useSelector(
-    (state) => state.bookingReducer.containerDate
-  )
 
-  let str = ''
-  const handleOpenDate = () => {
-    setOpenDate(true)
-  }
+  const [bookingOrNot, setBookingOrNot] = useState(false)
+
+  const objDate = {}
+
   const handleChoseDate = (hours) => {
-    str += hours
-    dispatch(
-      addDateInContainer({
-        hours: hours,
-        seat: '63d4891d91bffe27c5f6fcb8',
-        player: 'Rash',
-      })
-    )
+    console.log(hours)
+
+    objDate.hours = hours
+    console.log(objDate)
+  }
+
+  const handleDate = (chosenDate) => {
+    objDate.date = chosenDate
   }
 
   const handleSubmitBooking = () => {
     dispatch(
       addBooking({
         seat: '63d4891d91bffe27c5f6fcb8',
-        player: 'Rash',
-        date: '2023-01-30',
-        hours: str,
+        player: 'Ruslan',
+        date: objDate.date,
+        hours: objDate.hours,
       })
     )
   }
 
-  const handleCalendar = () => {
-    return (
-      <div>
-        <Calendar />
-      </div>
-    )
-  }
+  const checkFreeOrNot = useSelector((state) => state.bookingSlice.booking)
+
+  console.log(checkFreeOrNot, 'checkOrNot')
+
+  /* if (JSON.stringify(checkFreeOrNot).indexOf('Время') !== -1) {
+    return <div>{checkFreeOrNot}</div>
+  } else if (JSON.stringify(checkFreeOrNot).indexOf('период') !== -1) {
+    return <div>{checkFreeOrNot}</div>
+  } */
 
   return (
-    <div className={styles.main}>
-      <div className={styles.daysWeekAndTime}>
-        {' '}
-        {daysOfTheWeek.map((item, index) => {
+    <div className={styles2.main}>
+      <div>
+        <div className={styles.mainCalendar}>
+          <div>{currentDate}</div>
+          <div>First day of the month: {firstDayOfMonth}</div>
+          <div className={styles.daysContainerCalendar}>
+            {days.map((item) => (
+              <div
+                onClick={() =>
+                  handleDate(item.props.children.props.children[0])
+                }
+              >
+                <div className={styles.days}>{item}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+      {JSON.stringify(checkFreeOrNot).indexOf('Время') !== -1 ? (
+        <div>{checkFreeOrNot}</div>
+      ) : JSON.stringify(checkFreeOrNot).indexOf('период') !== -1 ? (
+        <div>{checkFreeOrNot}</div>
+      ) : (
+        <div>Забронируйте время</div>
+      )}
+      <div className={styles2.containerTime}>
+        {time.map((item, index) => {
           return (
-            <div onClick={() => handleOpenDate()}>
-              {' '}
-              <div className={styles.daysInWeek}>{item}</div>
+            <div
+              className={bookingOrNot ? styles2.timeInDay : styles2.timeInDay2}
+              onClick={() => handleChoseDate(item)}
+            >
+              {item}
             </div>
           )
         })}
-      </div>
-
-      <div className={styles.containerTime}>
-        {openDate
-          ? time.map((item, index) => {
-              return (
-                <div
-                  className={
-                    bookingOrNot ? styles.timeInDay : styles.timeInDay2
-                  }
-                  onClick={() => handleChoseDate(item)}
-                >
-                  {item}
-                </div>
-              )
-            })
-          : null}
-        <div>{openDate ? handleCalendar() : null}</div>
       </div>
       <button onClick={handleSubmitBooking}>забронировать</button>
     </div>
