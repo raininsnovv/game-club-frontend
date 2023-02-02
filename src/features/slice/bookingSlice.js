@@ -24,14 +24,15 @@ export const fetchBooking = createAsyncThunk('booking/fetch', async (_, thunkAPI
 
 export const addBooking = createAsyncThunk(
   'booking/add',
-  async ({ seat, date, player, hours }, thunkAPI) => {
+  async ({ seat, player, date, hours }, thunkAPI) => {
+    console.log(seat, player, date, hours, 'action');
     try {
       const res = await fetch(`http://localhost:5000/booking/${seat}`, {
         method: 'POST',
         headers: {
           'Content-type': 'application/json',
         },
-        body: JSON.stringify({ seat, player, date, hours }),
+        body: JSON.stringify({ player, date, hours }),
       });
       const booking = await res.json();
 
@@ -60,6 +61,7 @@ const bookingSlice = createSlice({
         state.loading = false;
         state.error = null;
         state.booking = action.payload;
+        console.log(action.payload, 'addcase');
       })
       .addCase(fetchBooking.rejected, (state, action) => {
         state.loading = false;

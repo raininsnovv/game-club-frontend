@@ -1,103 +1,151 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+
 import { addBooking } from '../../../features/slice/bookingSlice'
+import moment from 'moment'
 
 import styles from './Booking.module.scss'
 
 const Booking = () => {
   const dispatch = useDispatch()
 
+  const [date2, setDate] = useState(new Date())
+  const currentDate = moment(date2).format('MMMM YYYY')
+  const daysInMonth = moment(date2).daysInMonth()
+  const firstDayOfMonth = moment(date2).startOf('month').format('dddd')
+  const days = []
+
+  for (let i = 1; i <= daysInMonth; i++) {
+    days.push(
+      <div>
+        <div key={i}>{moment(date2).date(i).format('YYYY-MM-DD')} </div>
+      </div>
+    )
+  }
+
   const dateForBooking = {
     daysOfTheWeek: ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'],
     time: [
-      '09:00',
-      '09:30',
-      '10:00',
-      '10:30',
-      '11:00',
-      '11:30',
-      '12:00',
-      '12:30',
-      '13:00',
-      '13:30',
-      '14:00',
-      '14:30',
-      '15:00',
-      '15:30',
-      '16:00',
-      '16:30',
-      '17:00',
-      '17:30',
-      '18:00',
-      '18:30',
-      '19:00',
-      '19:30',
-      '20:00',
-      '20:30',
-      '21:00',
-      '21:30',
-      '22:00',
-      '22:30',
-      '23:00',
-      '23:30',
-      '24:00',
+      '09:00 - 10:00',
+      '10:00 - 11:00',
+      '11:00 - 12:00',
+      '12:00 - 13:00',
+      '13:00 - 14:00',
+      '14:00 - 15:00',
+      '15:00 - 16:00',
+      '16:00 - 17:00',
+      '17:00 - 18:00',
+      '18:00 - 19:00',
+      '19:00 - 20:00',
+      '20:00 - 21:00',
+      '21:00 - 22:00',
+      '22:00 - 23:00',
+      '23:00 - 24:00',
     ],
   }
   const { daysOfTheWeek, time } = dateForBooking
-  const [openDate, setOpenDate] = useState(false)
+  const [login, setLogin] = useState('')
+
   const [bookingOrNot, setBookingOrNot] = useState(false)
-  const bookingAll = useSelector((state) => state.bookingSlice.booking)
-  const res = bookingAll.time
-  let str = ''
-  const handleOpenDate = () => {
-    setOpenDate(true)
-  }
+
+  const objDate = {}
+
   const handleChoseDate = (hours) => {
-    str += hours
+    console.log(hours)
+
+    objDate.hours = hours
+    console.log(objDate)
   }
 
-  const handleSubmitBooking = () => {
-     dispatch(
-      addBooking({
-        seat: '63d4891d91bffe27c5f6fcb8',
-        player: 'Rash',
-        date: '2023-01-30',
-        hours: str,
-      })
-    ) 
+  const handleDate = (chosenDate) => {
+    objDate.date = chosenDate
   }
+
+  const [disabledTime, setDisabledTime] = useState(false)
+  const [disabledDate, setDisabledDate] = useState(false)
+  const handleSubmitBooking = () => {
+    if (objDate.date !== undefined && objDate.hours !== undefined) {
+      dispatch(
+        addBooking({
+          seat: '63d4891d91bffe27c5f6fcb8',
+          player: login,
+          date: objDate.date,
+          hours: objDate.hours,
+        })
+      )
+      setDisabledTime(true)
+      setDisabledDate(true)
+    }
+    setLogin('')
+  }
+
+  const handleLogin = (e) => {
+    setLogin(e.target.value)
+    console.log(login)
+  }
+
+  const checkFreeOrNot = useSelector((state) => state.bookingSlice.booking)
 
   return (
     <div className={styles.main}>
-      <div className={styles.daysWeekAndTime}>
-        {' '}
-        {daysOfTheWeek.map((item, index) => {
-          return (
-            <div onClick={() => handleOpenDate()}>
-              {' '}
-              <div className={styles.daysInWeek}>{item}</div>
-            </div>
-          )
-        })}
-      </div>
-
-      <div className={styles.containerTime}>
-        {openDate
-          ? time.map((item, index) => {
-              return (
+      <div className={styles.mainCalendar}>
+        <div className={styles.duringMonth}>{currentDate}</div>
+        <div className={styles.loginInput}>
+          <input
+            type="text"
+            placeholder="Введите логин..."
+            value={login}
+            onChange={handleLogin}
+          />
+        </div>
+        {JSON.stringify(checkFreeOrNot).indexOf('Время') !== -1 ? (
+          <div className={styles.reservationTime}>{checkFreeOrNot}</div>
+        ) : JSON.stringify(checkFreeOrNot).indexOf('период') !== -1 ? (
+          <div className={styles.reservationTime}>{checkFreeOrNot}</div>
+        ) : (
+          <div className={styles.reservationTime2}>Забронируйте время</div>
+        )}
+        <div className={styles.calendarAndTime}>
+          <div className={styles.container}>
+            <div>Дата</div>
+            <div className={styles.daysContainerCalendar}>
+              {days.map((item) => (
                 <div
-                  className={
-                    bookingOrNot ? styles.timeInDay : styles.timeInDay2
+                  onClick={() =>
+                    handleDate(item.props.children.props.children[0])
                   }
-                  onClick={() => handleChoseDate(item)}
+                  className={styles.chooseDate}
                 >
                   {item}
+                  <input type="checkbox" disabled={disabledDate} />
                 </div>
-              )
-            })
-          : null}
+              ))}
+            </div>
+          </div>
+          <div className={styles.container2}>
+            <div>Время</div>
+            <div className={styles.containerTime}>
+              {time.map((item, index) => {
+                return (
+                  <div
+                    className={styles.timeInDay}
+                    onClick={() => handleChoseDate(item)}
+                  >
+                    {item}
+                    <input type="checkbox" disabled={disabledTime} />
+                  </div>
+                )
+              })}
+            </div>
+          </div>
+        </div>
+        <button
+          onClick={handleSubmitBooking}
+          className={styles.buttonReservation}
+        >
+          забронировать
+        </button>
       </div>
-      <button onClick={handleSubmitBooking}>забронировать</button>
     </div>
   )
 }
