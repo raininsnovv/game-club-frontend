@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './PC.module.scss';
 import { Link } from 'react-router-dom';
-import SportsEsportsTwoToneIcon from '@mui/icons-material/SportsEsportsTwoTone';
+import DesktopWindowsTwoToneIcon from '@mui/icons-material/DesktopWindowsTwoTone';
 import SkeletonPorts from './SkeletonPorts';
 import { fetchSeats } from '../../../features/slice/seatSlice';
 
@@ -33,7 +33,7 @@ const PC = () => {
             {pcSeats.map((seat) => (
               <Link to={`/seat/${seat._id}`}>
                 <div className={styles.item}>
-                  <SportsEsportsTwoToneIcon fontSize="large" />
+                  <DesktopWindowsTwoToneIcon fontSize="large" />
                 </div>
                 <Typography mt={1}>{seat.platformType}</Typography>
               </Link>
