@@ -34,7 +34,7 @@ export const addBooking = createAsyncThunk(
         headers: {
           'Content-type': 'application/json',
         },
-        body: JSON.stringify({ seat, player, date, hours }),
+        body: JSON.stringify({ player, date, hours }),
       })
       const booking = await res.json()
 

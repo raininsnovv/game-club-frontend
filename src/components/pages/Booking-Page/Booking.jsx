@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { addBooking } from '../../../features/slice/bookingSlice'
 import moment from 'moment'
-import styles from './Calendar.module.scss'
-import styles2 from './Booking.module.scss'
+
+import styles from './Booking.module.scss'
 
 const Booking = () => {
   const dispatch = useDispatch()
@@ -44,6 +44,7 @@ const Booking = () => {
     ],
   }
   const { daysOfTheWeek, time } = dateForBooking
+  const [login, setLogin] = useState('')
 
   const [bookingOrNot, setBookingOrNot] = useState(false)
 
@@ -60,66 +61,91 @@ const Booking = () => {
     objDate.date = chosenDate
   }
 
+  const [disabledTime, setDisabledTime] = useState(false)
+  const [disabledDate, setDisabledDate] = useState(false)
   const handleSubmitBooking = () => {
-    dispatch(
-      addBooking({
-        seat: '63d4891d91bffe27c5f6fcb8',
-        player: 'Ruslan',
-        date: objDate.date,
-        hours: objDate.hours,
-      })
-    )
+    if (objDate.date !== undefined && objDate.hours !== undefined) {
+      dispatch(
+        addBooking({
+          seat: '63d4891d91bffe27c5f6fcb8',
+          player: login,
+          date: objDate.date,
+          hours: objDate.hours,
+        })
+      )
+      setDisabledTime(true)
+      setDisabledDate(true)
+    }
+    setLogin('')
+  }
+
+  const handleLogin = (e) => {
+    setLogin(e.target.value)
+    console.log(login)
   }
 
   const checkFreeOrNot = useSelector((state) => state.bookingSlice.booking)
 
-  console.log(checkFreeOrNot, 'checkOrNot')
-
-  /* if (JSON.stringify(checkFreeOrNot).indexOf('Время') !== -1) {
-    return <div>{checkFreeOrNot}</div>
-  } else if (JSON.stringify(checkFreeOrNot).indexOf('период') !== -1) {
-    return <div>{checkFreeOrNot}</div>
-  } */
-
   return (
-    <div className={styles2.main}>
-      <div>
-        <div className={styles.mainCalendar}>
-          <div>{currentDate}</div>
-          <div>First day of the month: {firstDayOfMonth}</div>
-          <div className={styles.daysContainerCalendar}>
-            {days.map((item) => (
-              <div
-                onClick={() =>
-                  handleDate(item.props.children.props.children[0])
-                }
-              >
-                <div className={styles.days}>{item}</div>
-              </div>
-            ))}
+    <div className={styles.main}>
+      <div className={styles.mainCalendar}>
+        <div className={styles.duringMonth}>{currentDate}</div>
+        <div className={styles.loginInput}>
+          <input
+            type="text"
+            placeholder="Введите логин..."
+            value={login}
+            onChange={handleLogin}
+          />
+        </div>
+        {JSON.stringify(checkFreeOrNot).indexOf('Время') !== -1 ? (
+          <div className={styles.reservationTime}>{checkFreeOrNot}</div>
+        ) : JSON.stringify(checkFreeOrNot).indexOf('период') !== -1 ? (
+          <div className={styles.reservationTime}>{checkFreeOrNot}</div>
+        ) : (
+          <div className={styles.reservationTime2}>Забронируйте время</div>
+        )}
+        <div className={styles.calendarAndTime}>
+          <div className={styles.container}>
+            <div>Дата</div>
+            <div className={styles.daysContainerCalendar}>
+              {days.map((item) => (
+                <div
+                  onClick={() =>
+                    handleDate(item.props.children.props.children[0])
+                  }
+                  className={styles.chooseDate}
+                >
+                  {item}
+                  <input type="checkbox" disabled={disabledDate} />
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className={styles.container2}>
+            <div>Время</div>
+            <div className={styles.containerTime}>
+              {time.map((item, index) => {
+                return (
+                  <div
+                    className={styles.timeInDay}
+                    onClick={() => handleChoseDate(item)}
+                  >
+                    {item}
+                    <input type="checkbox" disabled={disabledTime} />
+                  </div>
+                )
+              })}
+            </div>
           </div>
         </div>
+        <button
+          onClick={handleSubmitBooking}
+          className={styles.buttonReservation}
+        >
+          забронировать
+        </button>
       </div>
-      {JSON.stringify(checkFreeOrNot).indexOf('Время') !== -1 ? (
-        <div>{checkFreeOrNot}</div>
-      ) : JSON.stringify(checkFreeOrNot).indexOf('период') !== -1 ? (
-        <div>{checkFreeOrNot}</div>
-      ) : (
-        <div>Забронируйте время</div>
-      )}
-      <div className={styles2.containerTime}>
-        {time.map((item, index) => {
-          return (
-            <div
-              className={bookingOrNot ? styles2.timeInDay : styles2.timeInDay2}
-              onClick={() => handleChoseDate(item)}
-            >
-              {item}
-            </div>
-          )
-        })}
-      </div>
-      <button onClick={handleSubmitBooking}>забронировать</button>
     </div>
   )
 }

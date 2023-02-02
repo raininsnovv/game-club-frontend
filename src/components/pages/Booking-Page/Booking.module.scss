@@ -1,20 +1,118 @@
 .main {
-  width: 1000px;
-  height: 600px;
+  width: 400px;
+  height: 400px;
   margin: auto;
   margin-top: 100px;
-  background-color: orange;
+  background-color: rgb(69, 4, 107);
 
-  .containerTime {
-    display: flex;
+  .mainCalendar {
+    width: 100%;
     flex-wrap: wrap;
+    height: 100%;
 
-    
+    .loginInput {
+      margin-top: 10px;
+    }
 
-    .timeInDay2 {
-      border: 2px solid red;
-      margin: 10px 10px;
-      color: black;
+    .buttonReservation {
+      width: 130px;
+      height: 30px;
+      background-color: gold;
+      border: none;
+      border-radius: 3px;
+      &:hover {
+        transform: translateY(-5px);
+      }
+    }
+
+    .duringMonth {
+      color: white;
+      font-size: 20px;
+      background-color: brown;
+      width: 160px;
+      margin: auto;
+      border-radius: 3px;
+    }
+
+    .reservationTime {
+      margin-top: 10px;
+      text-align: center;
+    }
+
+    .reservationTime2 {
+      width: 160px;
+      margin: auto;
+      margin-top: 10px;
+    }
+
+    .calendarAndTime {
+      width: 37 0px;
+      height: 300px;
+      margin-left: 40px;
+      display: flex;
+      margin: auto;
+
+      .container {
+        width: 180px;
+        height: 250px;
+        margin: auto;
+        :hover {
+          box-shadow: -3px 5px 5px 5px;
+        }
+
+        .daysContainerCalendar {
+          width: 180px;
+          height: 200px;
+          overflow: auto;
+          flex-wrap: wrap;
+          padding-left: 20px;
+          border: none;
+          overflow-x: hidden;
+
+          .chooseDate {
+            display: flex;
+            width: 120px;
+            margin: 10px 10px;
+            margin-left: 30px;
+            font-size: 16px;
+            color: white;
+
+            input {
+              color: rgba(253, 0, 0, 0);
+            }
+          }
+        }
+      }
+    }
+
+    .container2 {
+      width: 180px;
+      height: 250px;
+      margin: auto;
+      :hover {
+        box-shadow: -3px 5px 5px 5px;
+      }
+
+      .containerTime {
+        width: 180px;
+        height: 200px;
+        overflow: auto;
+        flex-wrap: wrap;
+        padding-left: 20px;
+        overflow-x: hidden;
+        border: none;
+
+        .timeInDay {
+          margin: 10px 10px;
+          color: white;
+          width: 120px;
+          font-size: 16px;
+
+          input {
+            color: rgba(253, 0, 0, 0);
+          }
+        }
+      }
     }
   }
 }
