@@ -30,7 +30,7 @@ const App = () => {
         <Route path="*" element={<Notfoundpage />} />
         <Route path="/pc" element={<PC />} />
         <Route path="/ps5" element={<PS5 />} />
-        <Route path="/booking" element={<Booking />} />
+        <Route path="/seat/:id" element={<Booking />} />
       </Routes>
     </AppWrapper>
   );
