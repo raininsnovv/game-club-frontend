@@ -1,0 +1,10 @@
+.img{
+    height: 300px;
+    width: 300px;
+    transition: 1s; /* Время эффекта */
+    border-radius: 10px;
+    z-index: 3;
+}
+    .img:hover {
+        transform: scale(1.2); /* Увеличиваем масштаб */
+    }

@@ -1,6 +1,6 @@
 section {
-    padding: 40px 0;
     text-align: center;
+    
 }
 
 section{
@@ -8,4 +8,12 @@ section{
         margin: 0 auto;
     }
     }
-  
+
+    .infokarta {
+      color:rgb(230, 215, 241);
+    }
+    .location {
+        background: rgb(197, 196, 214);
+        background: linear-gradient(90deg, rgb(29, 29, 94) 0%, rgb(47, 47, 113) 35%, rgba(97,49,115,1) 100%);
+
+    }

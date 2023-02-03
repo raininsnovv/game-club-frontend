@@ -1,9 +1,11 @@
 import React from "react";
+import styles from "../ContactPage/ContactPage.module.scss";
 
 const ContactPage = () => {
   return (
-    <div>
-      <h1>Find us</h1>
+    <div className={styles.location}>
+      <br />
+      <h2 className={styles.infokarta}>СПЕШИ К НАМ!</h2>
       <br />
       <section className="map">
         <div className="map-container">

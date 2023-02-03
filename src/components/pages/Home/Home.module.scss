@@ -1,0 +1,64 @@
+
+.headerDiv {
+  height: 100vh;
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  background-image:url('./UI/sky3.jpg');
+  background-size: cover;
+}
+.headerImg {
+    height:500px;
+    width:300px;
+    border-radius: 10px;
+}
+.logo{
+    display: flex;
+    justify-content: right;
+    margin-right: 220px;
+}
+.title{
+    font-weight: 700;
+    font-size: 40px;
+    color: rgb(255, 255, 255);
+    font-style: initial;
+}
+.subtitle {
+    font-weight: 400;
+    font-size: 30px;
+    z-index: 2;
+}
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    justify-content:space-around;
+    background: rgb(2,0,36);
+    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 35%, rgba(97,49,115,1) 100%);
+}
+
+// .backgroundImg2 {
+//     position: relative;
+//     height: 100%;
+//     width: 100%;
+//     background-image: linear-gradient(180deg, #71454a 0, #6e3e48 10%, #6a3747 20%, #662f46 30%, #602745 40%, #591f44 50%, #511744 60%, #481045 70%, #3e0b46 80%, #330948 90%, #25094a 100%);
+//     background-size: cover;
+// }
+
+// .shadowContainer {
+//     position: fixed;
+//     top: 0;
+//     left: 0;
+//     width: 100%;
+//     height: 100%;
+//     z-index:1;
+//     background-color: rgba(0, 0, 0, 0.5);
+// }
+
+.cardBox {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    z-index: 2;
+}
